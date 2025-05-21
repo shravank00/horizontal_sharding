@@ -1,0 +1,35 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: root
+  host: localhost
+
+development:
+  primary:
+    <<: *default
+    database: shard_app_primary
+
+  shard_one:
+    <<: *default
+    database: shard_app_shard_one
+    migrations_paths: db/shards/shard_one
+
+  shard_two:
+    <<: *default
+    database: shard_app_shard_two
+    migrations_paths: db/shards/shard_two
+
+test:
+  primary:
+    <<: *default
+    database: shard_app_primary_test
+
+  shard_one:
+    <<: *default
+    database: shard_app_shard_one_test
+
+  shard_two:
+    <<: *default
+    database: shard_app_shard_two_test
