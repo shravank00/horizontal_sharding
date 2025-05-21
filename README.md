@@ -1,25 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
 # horizontal_sharding
+
+## Below is how you will fetch the users based on sharding
+def fetch_users_from(shard)
+  ApplicationRecord.connected_to(shard: shard) do
+    User.all.to_a
+  end
+end
+
+puts fetch_users_from(:shard_one)
+puts fetch_users_from(:shard_two)
